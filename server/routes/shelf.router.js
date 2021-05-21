@@ -7,6 +7,15 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   res.sendStatus(200); // For testing only, can be removed
+  const queryText = `SELECT * FROM item;`;
+  pool.query(queryText)
+    .then( result => {
+      res.send(result.rows);
+    })
+    .catch( error => {
+      console.log('Error is GET items', error);
+      res.sendStatus(500)
+    })
 });
 
 //`SELECT * FROM item ORDER BY "id" ASC;` I accidentally wrote the get route query! SE
