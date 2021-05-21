@@ -8,27 +8,22 @@ function ShelfPage() {
 
   //dispatch to item saga returns all items from DB 
     //and adds them to the item reducer
-  // useEffect(() => {
-  //     dispatch({ type: 'FETCH_ITEMS' }); //add action **DOUBLE CHECK NAMING CONVENTIONS**
-  // }, []);
+  useEffect(() => {
+      dispatch({ type: 'FETCH_ITEMS' });
+  }, []);
 
-  //creates a redux store instance for items reducer **DOUBLE CHECK NAMING CONVENTION!**
-  //const items =useSelector(store => store.items);
-  const user_id = useSelector(store => store.userReducer)
+  const items = useSelector(store => store.items);
 
   const [description, setDescription] = useState('');
   const [image_url, setImageUrl] = useState('');
-  //we also need to add the user's id to the new item object. How do we capture this?
 
   //post route should be moved to it's own saga...
   //dispatch({type: 'ADD_ITEM', payload: action.payload});
   const addItem = () => {
-    //DOUBLE CHECK URL HERE. Also we need to send user_id to DB, but how do we capture it?
     axios.post('/api/shelf',
       {
         description: description,
         image_url: image_url,
-        user_id: user_id,
       } 
     ).then(response => {
       console.log('back from POST', response)
@@ -36,6 +31,11 @@ function ShelfPage() {
       console.log('in addItem POST', error)  
     });
   } 
+
+  const deleteItem = () => {
+    console.log('in delete item', ); //item.id
+    
+  }
 
   return (
     <div className="container">
@@ -57,18 +57,21 @@ function ShelfPage() {
       </div>
       <div>
         <h2>Shelf</h2>
-        <p>All of the available items can be seen here.</p>
-        {/* may want to add div here to list item objects rather than li */}
-        {/* {items.map((item, i) => {
-            return (  
-              <ul>
-                <li key={i}>{item.description}{item.image_url}</li>
-              </ul>
+        <p>All available items can be seen here.</p>
+        {/* {JSON.stringify(items)} */}
+        {items.map((item, i) => {
+            return (
+              <>  
+                <ul>
+                  <li key={i}>{item.description} <img src={item.image_url} alt="old school key" /></li>
+                  <button value={item.id} onClick={(event) => deleteItem(event.target.value)}>Delete Item</button>
+                </ul>
+              </>
             );
-        })} */}
+        })}
       </div>
       {/* We may need to move this delete button. Somehow we need to connect it to the id of the item being deleted */}
-      <button>Delete Item</button>
+      
     </div>
   );
 }
