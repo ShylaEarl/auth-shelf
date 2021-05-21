@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
 /**
  * Add an item for the logged in user to the shelf
  */
+
 router.post('/', rejectUnauthenticated, (req, res) => {
   // endpoint functionality
   const user_id = req.user.id;
@@ -45,12 +46,13 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  */
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
   // endpoint functionality
-  
-    let reqId = req.params.id;
-    console.log('Delete request id', reqId);
+    let selectId = req.params.id;
+    console.log('Delete request id', authID);
 
-    let sqlText = 'DELETE FROM item ';
-    pool.query(sqlText, [reqId])
+    const query = 
+     `DELETE FROM item WHERE item.user_id = ${selectID};`;
+
+    pool.query(sqlText, [selectId])
     .then((result) => {
         console.log('item deleted');
         res.sendStatus(200);

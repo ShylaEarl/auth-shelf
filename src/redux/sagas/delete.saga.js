@@ -2,21 +2,15 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* deleteShelfItem() {
-  
-    try {
-        yield put({ type: 'DELETE_ITEM' });
-        
-        const config = {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          };
+  try {
+    const item = yield axios.delete(`/api/shelf/${action.payload}`);
+    console.log('here is item', item);
+     yield put({ type: 'REMOVE_ITEM' });
 
-          yield axios.delete('/api/user/login', action.payload, config);
-
-      } catch (error) {
-        console.log('Error Deleting Item:', error);
-      }
-    
+ } catch (error) {
+     alert(' sorry cannot delete is not working now. Try again later');
+     console.log('error adding details', error);
+ }
 }
 
 export default deleteShelfItem;

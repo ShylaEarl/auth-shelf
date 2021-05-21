@@ -18,7 +18,7 @@ function ShelfPage() {
   const [image_url, setImageUrl] = useState('');
 
   //post route should be moved to it's own saga...
-  //dispath({type: 'ADD_ITEM', payload: action.payload});
+  //dispatch({type: 'ADD_ITEM', payload: action.payload});
   const addItem = () => {
     axios.post('/api/shelf',
       {
