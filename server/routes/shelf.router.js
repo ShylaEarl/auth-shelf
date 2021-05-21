@@ -9,13 +9,34 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   res.sendStatus(200); // For testing only, can be removed
+  const queryText = `SELECT * FROM item;`;
+  pool.query(queryText)
+    .then( result => {
+      res.send(result.rows);
+    })
+    .catch( error => {
+      console.log('Error is GET items', error);
+      res.sendStatus(500)
+    })
 });
+
+//`SELECT * FROM item ORDER BY "id" ASC;` I accidentally wrote the get route query! SE
 
 /**
  * Add an item for the logged in user to the shelf
  */
 router.post('/', (req, res) => {
   // endpoint functionality
+  const query  = `INSERT INTO "item" ("description", "image_url", "user_id")
+      VALUES ($1, $2, $3)`;
+  pool.query(query, [req.body.description, req.body.image_url, req.body.user_id])
+    .then(result => {
+      console.log('item object POST', result.rows);
+      res.sendStatus(201);
+    }).catch (error => {
+      console.log(error);
+      res.sendStatus(500)
+    })
 });
 
 /**
