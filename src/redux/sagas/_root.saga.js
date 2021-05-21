@@ -21,7 +21,7 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
 
-    deleteShelfItem()
+    deleteShelfItem(),
 
     itemsSaga(),
 
