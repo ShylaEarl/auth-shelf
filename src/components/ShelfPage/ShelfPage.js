@@ -21,7 +21,7 @@ function ShelfPage() {
   //we also need to add the user's id to the new item object. How do we capture this?
 
   //post route should be moved to it's own saga...
-  //dispath({type: 'ADD_ITEM', payload: action.payload});
+  //dispatch({type: 'ADD_ITEM', payload: action.payload});
   const addItem = () => {
     //DOUBLE CHECK URL HERE. Also we need to send user_id to DB, but how do we capture it?
     axios.post('/api/shelf',
